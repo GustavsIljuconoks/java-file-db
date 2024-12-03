@@ -189,8 +189,101 @@ public final class Main {
         System.out.println("added");
     }
 
-    // TODO: Implement editing
-    public static void handleEdit(String command) { }
+    public static void handleEdit(String command)
+    {
+        String[] parts = command.split(" ", 2);
+        if (parts.length < 2) {
+            System.out.println("wrong format");
+            return;
+        }
+
+        String[] fields = parts[1].split(";");
+        if (fields.length > 6) {
+            System.out.println("wrong field count");
+            return;
+        }
+
+        String[] fullFields = new String[6];
+        for (int i = 0; i < 6; i++) {
+            fullFields[i] = i < fields.length ? fields[i] : "";
+        }
+
+        String idStr = fullFields[0];
+        if (idStr.length() != 3) {
+            System.out.println("wrong id");
+            return;
+        }
+
+        int id;
+        try {
+            id = parseInt(idStr);
+        } catch (NumberFormatException e) {
+            System.out.println("wrong id");
+            return;
+        }
+
+        Travel travelToEdit = null;
+        for (Travel travel : travelDatabase) {
+            if (travel.id == id) {
+                travelToEdit = travel;
+                break;
+            }
+        }
+
+        if (travelToEdit == null) {
+            System.out.println("wrong id");
+            return;
+        }
+
+        if (!fullFields[1].isEmpty()) {
+            travelToEdit.setCity(Utils.formatCity(fullFields[1]));
+        }
+
+        if (!fullFields[2].isEmpty()) {
+            if (!Utils.validateDate(fullFields[2])) {
+                System.out.println("wrong date");
+                return;
+            }
+
+            travelToEdit.setDate(fullFields[2]);
+        }
+
+        if (!fullFields[3].isEmpty()) {
+            int days;
+            try {
+                days = parseInt(fullFields[3]);
+            } catch (NumberFormatException e) {
+                System.out.println("wrong day count");
+                return;
+            }
+
+            travelToEdit.setDays(days);
+        }
+
+        if (!fullFields[4].isEmpty()) {
+            double price;
+            try {
+                price = Double.parseDouble(fullFields[4]);
+            } catch (NumberFormatException e) {
+                System.out.println("wrong price");
+                return;
+            }
+
+            travelToEdit.setPrice(price);
+        }
+
+        if (!fullFields[5].isEmpty()) {
+            String vehicle = fullFields[5].toUpperCase();
+            if (!Utils.validateVehicle(vehicle)) {
+                System.out.println("wrong vehicle");
+                return;
+            }
+
+            travelToEdit.setVehicle(vehicle);
+        }
+
+        System.out.println("changed");
+    }
 
     public static void handleDelete(String command)
     {
