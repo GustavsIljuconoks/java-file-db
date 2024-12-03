@@ -89,7 +89,7 @@ public final class Main {
     static List<Travel> travelDatabase = new ArrayList<>();
 
     public static void main(String[] args) {
-        loadDatabase("src/lab13/db.csv");
+        loadDatabase("src/db.csv");
         String command;
 
         loop: while (true) {
