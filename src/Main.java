@@ -99,7 +99,7 @@ public final class Main {
                 handleAdd(command);
             } else if (command.startsWith("edit")) {
                 handleEdit(command);
-            } else if (command.startsWith("delete")) {
+            } else if (command.startsWith("del")) {
                 handleDelete(command);
             } else if (command.startsWith("list")) {
                 handleList(command);
@@ -192,10 +192,38 @@ public final class Main {
     // TODO: Implement editing
     public static void handleEdit(String command) { }
 
-    // TODO: Implement delete
     public static void handleDelete(String command)
     {
+        String[] parts = command.split(" ", 2);
+        if (parts.length < 2) {
+            System.out.println("wrong format");
+            return;
+        }
 
+        String idStr = parts[1];
+
+        if (idStr.length() != 3) {
+            System.out.println("wrong id");
+            return;
+        }
+
+        int id;
+        try {
+            id = parseInt(idStr);
+        } catch (NumberFormatException e) {
+            System.out.println("wrong id");
+            return;
+        }
+
+        for (Travel travel : travelDatabase) {
+            if (travel.id == id) {
+                travelDatabase.remove(travel);
+                System.out.println("deleted");
+                return;
+            }
+        }
+
+        System.out.println("wrong id");
     }
 
     public static void handleList(String command)
