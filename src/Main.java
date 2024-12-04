@@ -1,8 +1,6 @@
 // 241RDB246 Gustavs Iļjučonoks 9.grupa
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -187,6 +185,7 @@ public final class Main {
 
         travelDatabase.add(new Travel(id, city, date, days, price, vehicle));
         System.out.println("added");
+        saveDatabase("src/db.csv");
     }
 
     public static void handleEdit(String command)
@@ -283,6 +282,7 @@ public final class Main {
         }
 
         System.out.println("changed");
+        saveDatabase("src/db.csv");
     }
 
     public static void handleDelete(String command)
@@ -312,6 +312,7 @@ public final class Main {
             if (travel.id == id) {
                 travelDatabase.remove(travel);
                 System.out.println("deleted");
+                saveDatabase("src/db.csv");
                 return;
             }
         }
@@ -348,6 +349,18 @@ public final class Main {
             }
         } catch (IOException e) {
             System.out.println("An error occurred while reading the file: " + e.getMessage());
+        }
+    }
+
+    public static void saveDatabase(String fileName)
+    {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+            for (Travel travel : travelDatabase) {
+                bw.write(String.format("%d;%s;%s;%d;%.2f;%s\n",
+                        travel.id, travel.city, travel.date, travel.days, travel.price, travel.vehicle));
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the file: " + e.getMessage());
         }
     }
 }
