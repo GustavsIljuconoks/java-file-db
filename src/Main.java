@@ -1,9 +1,7 @@
 // 241RDB246 Gustavs Iļjučonoks 9.grupa
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -102,7 +100,7 @@ public final class Main {
             } else if (command.startsWith("list")) {
                 handleList(command);
             } else if (command.startsWith("sort")) {
-                // TODO: Implement sorting
+                sortDatabase();
             } else if (command.startsWith("find")) {
                 // TODO: Implement searching
             } else if (command.startsWith("avg")) {
@@ -372,5 +370,18 @@ public final class Main {
         }
         double avg = sum / travelDatabase.size();
         System.out.println("average=" + avg);
+    }
+
+    public static void sortDatabase()
+    {
+        Collections.sort(travelDatabase, new Comparator<Travel>() {
+            @Override
+            public int compare(Travel t1, Travel t2) {
+                return t1.date.compareTo(t2.date);
+            }
+        });
+
+        System.out.println("sorted");
+        saveDatabase("src/db.csv");
     }
 }
