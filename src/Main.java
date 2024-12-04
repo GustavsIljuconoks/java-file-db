@@ -102,7 +102,7 @@ public final class Main {
             } else if (command.startsWith("sort")) {
                 sortDatabase();
             } else if (command.startsWith("find")) {
-                // TODO: Implement searching
+                findItem(command);
             } else if (command.startsWith("avg")) {
                 averagePrice();
             } else if (command.startsWith("exit")) {
@@ -383,5 +383,28 @@ public final class Main {
 
         System.out.println("sorted");
         saveDatabase("src/db.csv");
+    }
+
+    public static void findItem(String command)
+    {
+        String[] parts = command.split(" ", 2);
+        if (parts.length < 2) {
+            System.out.println("wrong format");
+            return;
+        }
+
+        float price = Float.parseFloat(parts[1]);
+
+        System.out.println("\n------------------------------------------------------------");
+        System.out.printf("%-4s%-21s%-11s%6s%10s%8s", "Id", "City", "Date", "Days", "Price", "Vehicle");
+        System.out.println("\n------------------------------------------------------------");
+
+        for (Travel travel : travelDatabase) {
+            if (travel.price <= price) {
+                System.out.printf("%-4d%-21s%-11s%6d%10.2f%8s\n", travel.id, travel.city, travel.date, travel.days, travel.price, travel.vehicle);
+            }
+        }
+
+        System.out.println("\n------------------------------------------------------------");
     }
 }
