@@ -106,11 +106,11 @@ public final class Main {
             } else if (command.startsWith("find")) {
                 // TODO: Implement searching
             } else if (command.startsWith("avg")) {
-                // TODO: Implement average
+                averagePrice();
             } else if (command.startsWith("exit")) {
                 break loop;
             } else {
-                System.out.println("Invalid command");
+                System.out.println("wrong command");
             }
         }
         sc.close();
@@ -362,5 +362,15 @@ public final class Main {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the file: " + e.getMessage());
         }
+    }
+
+    public static void averagePrice()
+    {
+        double sum = 0;
+        for (Travel travel : travelDatabase) {
+            sum += travel.price;
+        }
+        double avg = sum / travelDatabase.size();
+        System.out.println("average=" + avg);
     }
 }
