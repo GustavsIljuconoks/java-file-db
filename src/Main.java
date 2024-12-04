@@ -97,7 +97,7 @@ public final class Main {
                 handleEdit(command);
             } else if (command.startsWith("del")) {
                 handleDelete(command);
-            } else if (command.startsWith("list")) {
+            } else if (command.startsWith("print")) {
                 handleList(command);
             } else if (command.startsWith("sort")) {
                 sortDatabase();
