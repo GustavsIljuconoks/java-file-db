@@ -170,7 +170,7 @@ public final class Main {
 
         double price;
         try {
-            price = Double.parseDouble(priceStr);
+            price = Double.parseDouble(priceStr.replace(",", "."));
         } catch (NumberFormatException e) {
             System.out.println("wrong price");
             return;
@@ -260,7 +260,7 @@ public final class Main {
         if (!fullFields[4].isEmpty()) {
             double price;
             try {
-                price = Double.parseDouble(fullFields[4]);
+                price = Double.parseDouble(fullFields[4].replace(",", "."));
             } catch (NumberFormatException e) {
                 System.out.println("wrong price");
                 return;
@@ -341,7 +341,7 @@ public final class Main {
                 String city = fields[1];
                 String date = fields[2];
                 int days = parseInt(fields[3]);
-                double price = Double.parseDouble(fields[4]);
+                double price = Double.parseDouble(fields[4].replace(",", "."));
                 String vehicle = fields[5];
                 travelDatabase.add(new Travel(id, city, date, days, price, vehicle));
             }
